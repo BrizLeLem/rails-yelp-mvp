@@ -1,0 +1,11 @@
+<h1>Add review to <%= @restaurant.name %> </h1>
+
+
+ <!-- POST   /restaurants/:restaurant_id/reviews -->
+<%= simple_form_for([@restaurant, @review]) do |f| %>
+  <%= f.input :content %>
+  <%= f.collection_radio_buttons :rating, [[1, '1'] ,[2, '2'],[3, '3'],[4, '4'],[5, '5']], :first, :last, include_hidden: true %>
+  <br>
+  <br>
+  <%= f.submit class: "btn btn-secondary" %>
+<% end %>

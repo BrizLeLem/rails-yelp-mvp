@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @restaurant.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @restaurant.address %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @restaurant.phone_number %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <% if @restaurant.reviews.count > 0 %>
+            <% sum = @restaurant.reviews.map(&:rating).sum %>
+            (<%= average = sum.fdiv(@restaurant.reviews.count).round(1) %>)
+          <% else %>
+            No rating yet
+          <% end %>
+</p>
+
+<div>
+  <ul>
+    <% @restaurant.reviews.each do |review| %>
+      <li>
+        <%= review.content %> (<%= review.rating %>)
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div>
+  <h1>Add a review</h1>
+
+
+ <!-- POST   /restaurants/:restaurant_id/reviews -->
+<%= simple_form_for([@restaurant, @review]) do |f| %>
+  <%= f.input :content %>
+  <%= f.collection_radio_buttons :rating, [[1, '1'] ,[2, '2'],[3, '3'],[4, '4'],[5, '5']], :first, :last, include_hidden: true %>
+  <br>
+  <br>
+  <%= f.submit class: "btn btn-secondary" %>
+<% end %>
+</div>
+
+<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<%= link_to 'Back', restaurants_path %> |
+<%= link_to 'Leave a review', new_restaurant_review_path(@restaurant) %>

@@ -1,0 +1,17 @@
+<h1>Restaurants</h1>
+
+<ul>
+  <% @restaurants.each do |restaurant| %>
+        <li> <%= link_to restaurant.name, restaurant_path(restaurant) %> •
+          <% if restaurant.reviews.count > 0 %>
+            <% sum = restaurant.reviews.map(&:rating).sum %>
+            (<%= average = sum.fdiv(restaurant.reviews.count) %>)
+          <% else %>
+            No rating yet
+          <% end %>
+         </li>
+  <% end %>
+</ul>
+
+
+
